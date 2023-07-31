@@ -8,7 +8,6 @@ import re
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from matplotlib.pyplot import imshow
