@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: resume_corrector
+    name: draw_with_ai
     runtime: docker
     plan: free
     repo: https://github.com/BaurArabov/DoodleDuel-back
