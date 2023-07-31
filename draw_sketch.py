@@ -12,8 +12,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from matplotlib.pyplot import imshow
 from PIL import Image
-
-# from transformers import AutoFeatureExtractor, AutoModelForImageClassification
+from transformers import AutoFeatureExtractor, AutoModelForImageClassification
 
 app = FastAPI()
 origins = [
@@ -250,48 +249,47 @@ async def generate_sketch_response(category: str = Query(..., title="Category Na
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-#aaaaaaaaaaaa
     
-# extractor = AutoFeatureExtractor.from_pretrained("kmewhort/resnet34-sketch-classifier")
-# model = AutoModelForImageClassification.from_pretrained("kmewhort/resnet34-sketch-classifier")
+extractor = AutoFeatureExtractor.from_pretrained("kmewhort/resnet34-sketch-classifier")
+model = AutoModelForImageClassification.from_pretrained("kmewhort/resnet34-sketch-classifier")
 
-# @app.post("/recognize")
-# async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
-#     try:
-#         print("Received image_data_url:", image_data_url)
+@app.post("/recognize")
+async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
+    try:
+        print("Received image_data_url:", image_data_url)
         
-#         image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
-#         image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+        image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
+        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
 
-#         inputs = extractor(images=image, return_tensors="pt")
-#         outputs = model(**inputs)
-#         logits = outputs.logits
+        inputs = extractor(images=image, return_tensors="pt")
+        outputs = model(**inputs)
+        logits = outputs.logits
 
-#         predicted_class_idx = logits.argmax(-1).item()
-#         predicted_class = model.config.id2label[predicted_class_idx]
+        predicted_class_idx = logits.argmax(-1).item()
+        predicted_class = model.config.id2label[predicted_class_idx]
 
-#         return {"predicted_class": predicted_class}
-#     except Exception as e:
-#         return {"error": "An error occurred during classification."}
+        return {"predicted_class": predicted_class}
+    except Exception as e:
+        return {"error": "An error occurred during classification."}
     
-# @app.post("/recognizee")
-# async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
-#     try:
-#         print("Received image_data_url:", image_data_url)
+@app.post("/recognizee")
+async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
+    try:
+        print("Received image_data_url:", image_data_url)
 
-#         image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
-#         image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+        image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
+        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
 
-#         inputs = extractor(images=image, return_tensors="pt")
-#         outputs = model(**inputs)
-#         logits = outputs.logits
+        inputs = extractor(images=image, return_tensors="pt")
+        outputs = model(**inputs)
+        logits = outputs.logits
 
-#         predicted_class_idx = logits.argmax(-1).item()
-#         predicted_class = model.config.id2label[predicted_class_idx]
+        predicted_class_idx = logits.argmax(-1).item()
+        predicted_class = model.config.id2label[predicted_class_idx]
 
-#         return {"predicted_class": predicted_class}
-#     except Exception as e:
-#         return {"error": "An error occurred during classification."}
+        return {"predicted_class": predicted_class}
+    except Exception as e:
+        return {"error": "An error occurred during classification."}
         
 # new_extractor = AutoFeatureExtractor.from_pretrained("kmewhort/beit-sketch-classifier")
 # new_model = AutoModelForImageClassification.from_pretrained("kmewhort/beit-sketch-classifier")
