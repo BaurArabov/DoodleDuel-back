@@ -4,11 +4,7 @@ import json
 import os
 import random
 import re
-import time
 
-import cv2
-import imageio
-import matplotlib
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
