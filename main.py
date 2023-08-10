@@ -18,6 +18,7 @@ from transformers import BeitForImageClassification, BeitImageProcessor
 
 app = FastAPI()
 origins = [
+    "https://doodle-duel-7c2d.vercel.app",
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
