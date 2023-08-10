@@ -1,11 +1,11 @@
-services:
-  - type: web
-    name: draw_with_ai
-    runtime: docker
-    plan: free
-    repo: https://github.com/BaurArabov/DoodleDuel-back
-    region: frankfurt
-    branch: main
-    buildFilter:
-      paths:
-        - ./**
+# services:
+#   - type: web
+#     name: draw_with_ai
+#     runtime: docker
+#     plan: free
+#     repo: https://github.com/BaurArabov/DoodleDuel-back
+#     region: frankfurt
+#     branch: main
+#     buildFilter:
+#       paths:
+#         - ./**
