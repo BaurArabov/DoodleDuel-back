@@ -13,9 +13,8 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from matplotlib.pyplot import imshow
 from PIL import Image
-
 # from transformers import AutoFeatureExtractor, AutoModelForImageClassification
-# from transformers import BeitForImageClassification, BeitImageProcessor
+from transformers import BeitForImageClassification, BeitImageProcessor
 
 app = FastAPI()
 origins = [
@@ -203,47 +202,47 @@ async def generate_sketch_response(category: str = Query(..., title="Category Na
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
         
-# new_extractor = BeitImageProcessor.from_pretrained("kmewhort/beit-sketch-classifier")
-# new_model = BeitForImageClassification.from_pretrained("kmewhort/beit-sketch-classifier")
+new_extractor = BeitImageProcessor.from_pretrained("kmewhort/beit-sketch-classifier")
+new_model = BeitForImageClassification.from_pretrained("kmewhort/beit-sketch-classifier")
 
-# @app.post("/recognize")
-# async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
+@app.post("/recognize")
+async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
     
-#     try:
-#         print("Received image_data_url:", image_data_url)
-#         # Convert the data URL to an image
-#         image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
-#         image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+    try:
+        print("Received image_data_url:", image_data_url)
+        # Convert the data URL to an image
+        image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
+        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
 
-#         # Perform image classification
-#         inputs = new_extractor(images=image, return_tensors="pt")
-#         outputs = new_model(**inputs)
-#         logits = outputs.logits
-#         # model predicts one of the 21,841 ImageNet-22k classes
-#         predicted_class_idx = logits.argmax(-1).item()
-#         predicted_class = new_model.config.id2label[predicted_class_idx]
+        # Perform image classification
+        inputs = new_extractor(images=image, return_tensors="pt")
+        outputs = new_model(**inputs)
+        logits = outputs.logits
+        # model predicts one of the 21,841 ImageNet-22k classes
+        predicted_class_idx = logits.argmax(-1).item()
+        predicted_class = new_model.config.id2label[predicted_class_idx]
 
-#         return {"predicted_class": predicted_class}
-#     except Exception as e:
-#         return {"error": "An error occurred during classification."}
+        return {"predicted_class": predicted_class}
+    except Exception as e:
+        return {"error": "An error occurred during classification."}
     
-# @app.post("/recognizee")
-# async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
+@app.post("/recognizee")
+async def recognize_sketch(image_data_url: str = Query(..., description="Data URL of the image from the canvas")):
     
-#     try:
-#         print("Received image_data_url:", image_data_url)
-#         # Convert the data URL to an image
-#         image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
-#         image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+    try:
+        print("Received image_data_url:", image_data_url)
+        # Convert the data URL to an image
+        image_data = re.sub('^data:image/.+;base64,', '', image_data_url)
+        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
 
-#         # Perform image classification
-#         inputs = new_extractor(images=image, return_tensors="pt")
-#         outputs = new_model(**inputs)
-#         logits = outputs.logits
-#         # model predicts one of the 21,841 ImageNet-22k classes
-#         predicted_class_idx = logits.argmax(-1).item()
-#         predicted_class = new_model.config.id2label[predicted_class_idx]
+        # Perform image classification
+        inputs = new_extractor(images=image, return_tensors="pt")
+        outputs = new_model(**inputs)
+        logits = outputs.logits
+        # model predicts one of the 21,841 ImageNet-22k classes
+        predicted_class_idx = logits.argmax(-1).item()
+        predicted_class = new_model.config.id2label[predicted_class_idx]
 
-#         return {"predicted_class": predicted_class}
-#     except Exception as e:
-#         return {"error": "An error occurred during classification."}
+        return {"predicted_class": predicted_class}
+    except Exception as e:
+        return {"error": "An error occurred during classification."}
